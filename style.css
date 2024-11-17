@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'ModeSeven';
-    src: url('../style/fonts/modeSeven.TTF') format('truetype');
+    src: url('style/fonts/modeSeven.TTF') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Nulshock';
-    src: url('../style/fonts/nulshock.otf') format('truetype');
+    src: url('style/fonts/nulshock.otf') format('truetype');
     font-weight: lighter;
     font-style: normal;
 }
