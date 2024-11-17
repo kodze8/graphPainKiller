@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural D3 Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css">
+    
+
+</head>
+<body>
+
+    <!-- Block 1 -->
+    <div id="header_block">
+        <div id="menu_container">
+            <a id="menu" href="./home.html">MENU</a>
+        </div>
+
+        <div id="title_container">
+            <h4 id="title">DIJKSTRA’S SHORTEST PATH</h4>
+        </div>
+
+    </div>
+
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+
+        <!-- Graph Section  -->
+        <div id="graph_container">
+            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+            
+            <div id="button_block">
+                <div id="left">
+                    <div id="src_container">
+                        <select name="src" id="src"></select>
+                    </div>
+                    <div id="dst_container">
+                        <select name="dst" id="dst"></select>
+                    </div>
+                </div>
+                <div id="right">
+                    <div id="refresh_container">
+                        <button id="refresh">Refresh</button>
+                    </div>
+                
+                    <div id="start_container">
+                        <button id="start">Find Shortest Path</button>
+                    </div>
+
+                </div>
+            </div>
+            
+
+            <div id="path_container">
+                <div>
+                    <label for="">Shortest path: </label>
+                </div>
+
+                <div>
+                    <p id="msg"></p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Table Section  -->
+        <div id="data_container">
+            <div id="table_container">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <!-- Headers will be added here by JavaScript -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="function_container">
+                <label id="distances" for="">Distances from SRC:</label>
+                <h4 id="visited"></h4>
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+
+    <!-- Block 3  -->
+    <div id="info_block">
+        <div id="info_container">
+            <p id="info">
+                Dijkstra's Algorithm is a method used to find the shortest path between two points in a graph, where the edges have non-negative weights. It starts by setting the distance to the starting point as 0 and the distances to all other points as infinity. Then, it repeatedly selects the point with the smallest known distance, updates the distances to its neighboring points, and marks it as "visited." This process continues until the algorithm has found the shortest path to every point. Dijkstra’s Algorithm is widely used in navigation systems, like GPS, and for network routing. 
+        </div>
+
+        <div id="code_container">
+            <label id="code_title">Pseudo Code</label>
+            <p id="code">
+                Set(s)=0,t(x)=∞ for x≠s and S=∅. <br>
+                while there exists an x∈V ∖ S with t(x)≠∞:<br>
+                &nbsp;pick u ∈ V∖S with minimum t add u to S<br>
+                &nbsp;for all z ∈ N(u)∖S:<br>
+                &nbsp;&nbsp;t(z) to min(t(z), t(u) + w(uz)) <br>
+                return t
+            </p>
+        </div>
+
+    </div>
+
+
+
+    <script  type="module"  src="../static/js/dijkstra_vizualizer.js"></script>
+</body>
+</html>

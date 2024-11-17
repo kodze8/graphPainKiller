@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural D3 Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <style>
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+        .label {
+            font-size: 10px;
+            fill: #000;
+        }
+    </style>
+</head>
+<body>
+    <svg width="800" height="500"></svg>
+    <button id="start">Start DFS</button>
+    <button id="refresh">Refresh</button>
+    <h4 id="visited"></h4>
+
+    <script  type="module"  src="../static/js/temp1.js"></script>
+</body>
+</html>

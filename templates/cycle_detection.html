@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css">
+    <link rel="stylesheet" href="../style/css/dfs.css">
+
+
+</head>
+<body>    
+    <!-- Block 1 -->
+    <div id="header_block">
+        <div id="menu_container">
+            <a id="menu" href="./home.html">MENU</a>
+        </div>
+        <div id="title_container">
+            <h4 id="title">Cycle Detection with DFS </h4>
+        </div>
+
+    </div>
+
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+        <div id="graph_container">
+            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+            <div id="button_block">
+
+                <div id="left">
+                    <div id="src_container">
+                        <select name="direction" id="direction">
+                            <option value="1">Directed</option>
+                            <option value="0">Undirected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="right">
+                    <div id="refresh_container">
+                        <button id="refresh">Refresh</button>
+                    </div>
+                
+                    <div id="start_container">
+                        <button id="start">Detect Cycle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="stack_conatainer">
+            <table id="stack">
+                <tr>
+                    <th>DFS Stack</th>
+                </tr>
+            </table>
+
+            <div id="update_container">
+                <p class="node_data" id="update"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Block 3  -->
+    <div id="info_block">
+        <div id="info_container">
+            <p class="info">
+                1. <strong>In Undirected Graphs</strong>: When DFS visits a node, it marks it as visited. If it encounters a node that has already been visited and it's not the parent of the current node, a cycle is detected.
+            </p>
+            <p class="info">
+                2. <strong>In Directed Graphs</strong>: DFS marks nodes as visited and also tracks nodes currently in the recursion stack (the path it's exploring). If it encounters a node already in the stack, a cycle is detected, indicating a back edge.
+            </p>
+            <p class="info">
+                In both cases, DFS helps identify cycles by checking if a node is revisited in an unexpected way.
+            </p>
+            
+        </div>
+
+        <div id="code_container">
+            <label id="code_title">Pseudo Code</label>
+            <p id="code">
+                DFS(graph, node, visited, recursion_stack): <br>
+                &nbsp;// Mark the current node as visited<br>
+                &nbsp;visited[node] = true<br>
+                &nbsp;recursion_stack[node] = true<br>
+            
+                &nbsp;// Visit all the neighbors of the current node<br>
+                &nbsp;for each neighbor in graph[node]:<br>
+                &nbsp;&nbsp;if not visited[neighbor]:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;DFS(graph, neighbor, visited, recursion_stack)<br>
+                &nbsp;&nbsp;else if recursion_stack[neighbor]:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;// A cycle is detected<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return true<br>
+            
+                &nbsp;// Backtrack, remove the node from recursion stack<br>
+                &nbsp;recursion_stack[node] = false<br>
+            
+                &nbsp;return false<br>
+            </p>
+            
+        </div>
+    </div>
+
+
+
+
+    <script  type="module"  src="../static/js/detect_cycle_dfs.js"></script>
+</body>
+</html>

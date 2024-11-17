@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural D3 Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css">
+    <link rel="stylesheet" href="../style/css/dfs.css">
+
+</head>
+<body>
+    <!-- Block 1 -->
+    <div id="header_block">
+        <div id="menu_container">
+            <a id="menu" href="./home.html">MENU</a>
+        </div>
+        <div id="title_container">
+            <h4 id="title">Breadth First Search </h4>
+        </div>
+
+    </div>
+
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+        <div id="graph_container">
+            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+        
+            <div id="button_block">
+                <div id="left">
+                    <div id="src_container">
+                        <select name="src" id="src"></select>
+                    </div>
+                </div>
+
+                <div id="right">
+                    <div id="refresh_container">
+                        <button id="refresh">Refresh</button>
+                    </div>
+                    <div id="start_container">
+                        <button id="start">Start BFS</button>
+                    </div>
+                </div>
+            
+            </div>
+
+        </div>
+
+        <div id="stack_conatainer">
+            <h4 id="visited">BFS Path: </h4>
+        </div>
+       
+        
+    </div>
+
+   
+
+
+    <!-- Block 3  -->
+    <div id="info_block">
+        <div id="info_container">
+            <p id="info">  
+                Breadth-First Search (BFS) is a fundamental algorithm used for traversing or searching through graph data structures. It explores all the neighboring nodes at the present depth level before moving on to nodes at the next depth level. This means it explores a graph or tree level by level, ensuring that all nodes at one level are visited before any nodes at the next level. BFS is particularly useful for tasks like finding the shortest path in unweighted graphs, level-order traversal in trees, and solving problems like finding connected components.
+            </p>
+        </div>
+
+        <div id="code_container">
+            <label id="code_title">Pseudo Code</label>
+            <p id="code">
+                BFS(graph, start_node, visited): <br>
+                &nbsp;// Create a queue for BFS<br>
+                &nbsp;queue = [start_node] <br>
+                &nbsp;visited[start_node] = true <br>
+
+                &nbsp;// While there are nodes to visit<br>
+                &nbsp;while queue is not empty: <br>
+                &nbsp;&nbsp;current_node = queue.pop(0) <br>
+                
+                &nbsp;&nbsp;// Visit all the neighbors of the current node<br>
+                &nbsp;&nbsp;for each neighbor in graph[current_node]: <br>
+                &nbsp;&nbsp;&nbsp;if not visited[neighbor]: <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;visited[neighbor] = true <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;queue.append(neighbor) <br>
+            </p>
+
+        </div>
+    </div>
+
+    
+
+
+    <script  type="module"  src="../static/js/bfs_vizualizer.js"></script>
+</body>
+</html>

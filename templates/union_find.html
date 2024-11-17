@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css">
+    <link rel="stylesheet" href="../style/css/dfs.css">
+
+
+</head>
+<body>    
+    <!-- Block 1 -->
+    <div id="header_block">
+        <div id="menu_container">
+            <a id="menu" href="./home.html">MENU</a>
+        </div>
+        <div id="title_container">
+            <h4 id="title">Cycle Detection with DFS </h4>
+        </div>
+
+    </div>
+
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+        <div id="graph_container">
+            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+            <div id="button_block">
+
+
+                <div id="refresh_container">
+                    <button id="refresh">Refresh</button>
+                </div>
+            
+                <div id="start_container">
+                    <button id="start">Detect Cycle</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    
+
+
+
+
+    <script  type="module"  src="../static/js/detect_cycle_union_find.js"></script>
+</body>
+</html>

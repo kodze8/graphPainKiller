@@ -1,0 +1,292 @@
+
+@font-face {
+    font-family: 'ModeSeven';
+    src: url('../fonts/modeSeven.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Nulshock';
+    src: url('../fonts/nulshock.otf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+body{
+    background-color: #090833;
+    font-family: 'ModeSeven', sans-serif;
+}
+
+
+/* ---------BLOCK 1--------- */
+#header_block{
+    display: flex;
+    justify-content: flex-start;
+    position: relative; 
+    margin: 15px;
+}
+
+#title_container{
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+}
+
+#title {
+    font-family: 'ModeSeven';
+    color: #FDFFE9;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+
+#menu_container{
+    display: flex;
+    font-family:'Nulshock';
+    align-items: center;    
+   
+}
+
+#menu {
+
+    margin-top: 10px;
+    color: #BAD80F;
+    text-decoration: none;
+    font-size: 12px;
+    
+}
+
+
+
+
+
+
+/* ---------BLOCK 2--------- */
+
+/* GRAPH */
+#graph_block{
+    display: flex;
+    margin: 15px 15px 0px 15px;
+    justify-content: space-between;
+}
+#graph_container{
+    padding: 1%;
+}
+.link {
+    stroke: #090833;
+    stroke-opacity: 1;
+    stroke-width: 2;
+}
+.label {
+    font-size: 18px;
+    fill: #090833;
+}
+.weight {
+    fill: #F8FFB3; 
+    font-size: 15px; 
+    font-weight: bold; 
+}
+
+
+/*  BUTTONS */
+#button_block{
+    display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+  
+}
+#left {
+    display: flex;   
+    flex-direction: column;   
+    gap: 5px;            
+    justify-content: center; 
+    align-items: center;  
+}
+
+#right{
+    gap: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+#refresh, #start{
+    color: #FDFFE9;
+    font-family: "Nulshock";
+    font-size: 12px;
+    background: none;
+    padding: 1px 10px;
+    border: 3px solid #BAD80F;
+    border-radius: 15px;
+}
+
+#refresh:hover, #start:hover {
+    background: #BAD80F;        
+}
+#dst, #src, #direction{
+    background-color: #FDFFE9;
+    margin-right: 10px;
+    border-radius: 15px;
+    padding: 2px 0px 2px 5px;
+
+    font-family: 'Nulshock';
+    color: #AE2626;
+    box-shadow: none;   
+    outline: none;  
+    border: none;
+    transition: transform 0.2s ease;
+    width: 125px;    
+    font-size: 12px;
+}
+#direction{
+    width: auto;    
+}
+#dst, #src, #direction:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+/*  PATH */
+#path_container{
+    /* background-color: green; */
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: -30px;
+    font-family: 'ModeSeven';
+    font-size: 20px;
+    color: #FDFFE9;
+    gap: 5px;
+}
+#msg {
+    display: inline;  
+}
+  
+
+
+
+/*  TABLE */
+#data_container {
+    flex: 1; 
+    overflow: visible;
+    margin: 1% 1% 1% 10%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 5%;
+}
+#table_container {
+    text-align: center;
+    align-self: center;
+}
+
+#data-table {
+    font-size: 16px; 
+    width: 30%; 
+    border-collapse: collapse; 
+    
+}
+
+#data-table th, #data-table td {
+    padding: 5px 20px; 
+    text-align: center;
+    border: 0.5px dashed wheat; 
+    
+}
+#data-table th{
+    color: red;
+}
+
+
+/*  DISTANCES */
+#function_container {
+    text-align: left;
+    margin-top: 25px; 
+}
+#distances{
+    font-family:"Nulshock" ;
+    font-size: 16px;
+    color: #BAD80F;
+}
+#visited{
+    font-family: 'ModeSeven';
+    color: #FDFFE9;
+}
+
+
+
+
+
+
+
+
+/* ---------BLOCK 3--------- */
+
+/* INFO */
+#info_block{
+    margin-top: 30px;
+    align-items: start;
+    display: flex;
+    margin-bottom: 2%;
+}
+
+#info_container{
+    color: #FDFFE9;
+    flex-shrink: 0;
+    width: 50%;
+    padding: 1%;
+    font-size: 14px;
+}
+#info, .info{
+    margin-left: 15px;
+}
+
+
+/* PSEUDOCODE */
+#code_container{
+    border-radius: 10px;
+    padding: 0.5% ;
+    border: 1px dashed #AE2626;
+    width: auto;
+    margin: 0 auto; 
+    height: auto;
+
+}
+#code_title{
+    font-family:"Nulshock" ;
+    color: #AE2626;
+    padding: 0px;
+}
+#code{
+    font-size: 14px;
+    color: #AE2626;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
