@@ -17,7 +17,7 @@
              <a id="menu" href="../index.html">MENU</a>
         </div>
         <div id="title_container">
-            <h4 id="title">Cycle Detection with DFS </h4>
+            <h4 id="title">Cycle Detection with Union Find </h4>
         </div>
 
     </div>
@@ -29,20 +29,35 @@
             <div> <svg id="graph_grid" width="500" height="300"></svg></div>
             <div id="button_block">
 
-
-                <div id="refresh_container">
-                    <button id="refresh">Refresh</button>
+                <!-- for the sake of consistency -->
+                <div id="left">
                 </div>
-            
-                <div id="start_container">
-                    <button id="start">Detect Cycle</button>
+
+                <div id="right">
+                    <div id="refresh_container">
+                        <button id="refresh">Refresh</button>
+                    </div>
+                
+                    <div id="start_container">
+                        <button id="start">Detect Cycle</button>
+                    </div>
+
                 </div>
             </div>
         </div>
 
 
 
+        <div id="stack_conatainer">
+            
+
+            <div id="update_container">
+                <p class="node_data" id="update"></p>
+            </div>
+        </div>
     </div>
+
+
 
 
     

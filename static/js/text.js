@@ -1,4 +1,4 @@
- function unionFind(edges, n){
+function unionFind(edges, n){
   function findParnet(a, parents){
     if(parents[a] == a)
       return a;
@@ -8,15 +8,15 @@
 
 
   function union(a, b, parents){
-    var great_parent = findParnet(b, parents);
-    var temp = findParnet(a, parents)
+    var great_parent = parents[a];
+    var temp = parents[b];
 
     for(var i=0; i<parents.length; i++){
-      if(findParnet(i, parents)==temp){
+
+      if(parents[i]==temp){
         parents[i] = great_parent
       }
     }
-    parents[a] = great_parent
   }
 
   var parents = new Array(n);
@@ -36,5 +36,22 @@
 }
 
 
-var lst = [[1,2],[3,2], [3,4], [4,5], [1,5]]
-unionFind(lst, 6)
+var lst = [[2,0],[0,7], [1, 5], [6, 0], [5, 7]]
+
+unionFind(lst, 8)
+
+
+
+
+// (2, 0) - 0,1,0,3,4,5,6,7
+// (0, 7) - 7,1,0,3,4,5,6,7
+// (1, 5) - 7,5,0,3,4,5,6,7
+// (6, 0) - 7,5,0,3,4,5,7,7
+// (5, 7) - 7,7,0,3,4,7,7,7
+// (4, 6) - 7,7,0,3,7,7,7,7
+// (6, 2) - 7,7,7,3,7,7,7,7
+// CYCLE!!!
+// (2, 1) - 7,7,7,3,7,7,7,7
+// (5, 3) - 3,3,3,3,3,3,3,3
+// CYCLE!!!
+// (3, 7) - 3,3,3,3,3,3,3,3

@@ -236,6 +236,12 @@ export function visualizeStaticGraph(graph, svg) {
         .attr("y1", d => graph.nodes.find(node => node.id === d.source).y)
         .attr("x2", d => graph.nodes.find(node => node.id === d.target).x)
         .attr("y2", d => graph.nodes.find(node => node.id === d.target).y)
+
+        .attr("id", d => {
+            const a = graph.nodes.find(node => node.id === d.source).id;
+            const b = graph.nodes.find(node => node.id === d.target).id;
+            return `${a}${b}`;
+        });
  
     
     svg.append("g")
@@ -260,8 +266,8 @@ export function visualizeStaticGraph(graph, svg) {
         .attr("y", d => d.y+1)
         .attr("text-anchor", "middle") 
         .attr("dominant-baseline", "middle") 
-        // .text(d => d.id);
-        .text(d => NODE_MAP.get(d.id));
+        .text(d => d.id);
+        // .text(d => NODE_MAP.get(d.id));
 }
 
 export function generateSrcInput(src_selector, n){

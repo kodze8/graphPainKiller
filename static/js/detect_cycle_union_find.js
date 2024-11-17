@@ -7,7 +7,9 @@ import {
     errorPage, 
     NODE_MAP, 
     LIGHT_BLUE,YELLOW, NATURAL, 
-    INCEREMENT
+    INCEREMENT,
+    graphGenerator,
+    getRandomElement
 } from './general/graphUtils.js';
 
 import { 
@@ -22,24 +24,30 @@ import {
 const svg = d3.select("svg")
 let n, edges, nodes; 
 var graph;
-
 const update = document.getElementById("update")
-
-
-var direction = document.getElementById('direction');
-direction.addEventListener("change", changeDirection);
-var DIRECTED = true
-
 
 
 
 // marks the visited nodes
-function markNode(val, color = YELLOW) {
-   svg.selectAll('circle')
-        .filter(d => d.id === val)
+function markEdge(a, b, color = 'yellow') {
+    svg.selectAll('line')  
+        .filter(function(d) {
+            
+            const sourceNode = graph.nodes.find(node => node.id === d.source);
+            const targetNode = graph.nodes.find(node => node.id === d.target);
+            const linkId = `${sourceNode.id}${targetNode.id}`;
+            return linkId === `${a}${b}`;
+        })
         .attr('stroke', color)
         .attr('stroke-width', 8);
 }
+
+function markNode(val, color = YELLOW) {
+    svg.selectAll('circle')
+         .filter(d => d.id === val)
+         .attr('stroke', color)
+         .attr('stroke-width', 8);
+ }
 
 function cyclePath(neighbour,path){
     var include = false
@@ -59,115 +67,81 @@ function cyclePath(neighbour,path){
 
 function waitForTimeout() {
     return new Promise(resolve => {
-        setTimeout(resolve, INCEREMENT);  
+        setTimeout(resolve, 1000);  
     });
 }
 
 
-// --------- UNDIRECTED ---------
-function detectCycle(edges, n, callback) {
-    var adj = edges_to_adj(n, edges);
+function randomRGBColor() {
+    const r = Math.floor(Math.random() * 256); // Random red value (0-255)
+    const g = Math.floor(Math.random() * 256); // Random green value (0-255)
+    const b = Math.floor(Math.random() * 256); // Random blue value (0-255)
+    return `rgb(${r}, ${g}, ${b})`;
+}
 
-    // Make the recursive function async to use await
-    async function rec(src, adj, path, prev) {
-        path.push(src);
-        markNode(src, LIGHT_BLUE)
-        //update.innerHTML = `path: ${path}`;
-        addRow(NODE_MAP.get(src))
-        
 
-        for (var neighbour of adj.get(src)) {
-            if (path.includes(neighbour)) {               
-                if (prev !== neighbour) {
-                    await waitForTimeout();
-                    cyclePath(neighbour, path)
-                    return true;
-                }
-            } 
-            else {
-                await waitForTimeout();
-                if (await rec(neighbour, adj, path, src)) { 
-                    return true;
-                }
-                // emptify the whole path
-                if (path.length > 0) {       
-                    await waitForTimeout();
-                    var removed = path.pop();
-                    markNode(removed, null)
-                    removeRow()
-                }
+function unionFind(edges, n){
+
+    function findParnet(a, parents){
+      if(parents[a] == a)
+        return a;
+      else
+        return findParnet(parents[a],parents)
+    }
+  
+
+    async function union(a, b, parents, colors){
+        var great_parent = parents[a];
+        var temp = parents[b];
+        markNode(great_parent, colors[great_parent])
+        // markEdge(a, b, colors[great_parent])
+
+        for(var i=0; i<parents.length; i++){
+            if(parents[i]==temp){
+              parents[i] = great_parent
+              markNode(i, colors[great_parent])
             }
         }
-        return false;
     }
+  
+    async function runner(){
+        var parents = new Array(n);
+        var colors = new Array(n);
+        for(var i=0; i<n; i++){
+          parents[i] = i;
+          colors[i] = randomRGBColor()
+          markNode(i, colors[i])
+        }
+    
+        for(var edge of edges){
+            await waitForTimeout()
+            var cycle_detected = false
+            if(parents[edge[0]]==parents[edge[1]])
+                cycle_detected = true
+                
+        
+            union(edge[0], edge[1], parents, colors)
+            update.innerHTML+=`(${edge[0]}, ${edge[1]}) - ${parents}<br>`
+            if(cycle_detected)
+                update.innerHTML+="CYCLE!!!<br>"
+           
+        }
+        process_goes = false;
 
-
-    (async () => {
-        const cycle_exists = await rec(0, adj, [], 0);
-        update.innerHTML = `<br>finished with ${cycle_exists ? "cycle" : "no cycle"}`;
-        callback();
-    })();
+    }
+    runner()
 }
 
 
 
 
-// --------- UNDIRECTED ---------
-function detectCycleDirected(edges, n, callback) {
-    async function rec(adj, src, path, visited) {
-        path.push(src);
-        visited.add(src);
-        markNode(src, LIGHT_BLUE);
-        addRow(NODE_MAP.get(src))
-        
-
-        for (var nei of adj.get(src)) {
-            if (path.includes(nei)) {
-                await waitForTimeout();
-                cyclePath(nei, path); 
-                return true;
-            } else if (!visited.has(nei)) {
-                await waitForTimeout();
-                if (await rec(adj, nei, path, visited)) { 
-                    return true;
-                }
-            }
-        }
-        await waitForTimeout();
-        path.pop();
-        markNode(src, null);
-        removeRow();
-        return false; 
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-
-    (async () => {
-        var adj = edgesToAdjDirected(n, edges);
-        var visited = new Set();
-
-        for (var i = 0; i < n; i++) {
-            if (!visited.has(i)) {
-                if(i!=0)
-                    await waitForTimeout();
-                var cycle_exists = await rec(adj, i, [], visited);
-                if (cycle_exists) {
-                    update.innerHTML = `<br>finished with "cycle"`;
-                    // update  add cycle 
-                    callback();
-                    return; 
-                }
-            }
-        }
-        update.innerHTML = `<br>finished with no cycle`;
-        callback();
-    })();
+    return array;
 }
-
-
-
-
-
-
-
 
 
 
@@ -180,22 +154,9 @@ function startCycleDectection(){
             .data(graph.nodes)
             .attr("fill", NATURAL)
             .attr('stroke', 'none')
-
-        clearStack()
         update.innerHTML = ""
-        var dir  = parseInt(direction.value, 10); 
-
-        if(dir==0){
-            detectCycle(edges, n, ()=>{
-                process_goes = false; 
-            });
-
-        } else{
-            detectCycleDirected(edges, n, ()=>{
-                process_goes = false; 
-            });
-           
-        }
+        unionFind(edges,n);
+    
    }
 }
 
@@ -207,47 +168,45 @@ function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
         update.innerHTML = ""
-        clearStack()
         generateGraph();
         vizualize();
     }
 }
-function changeDirection(){
-    if(!process_goes){
-        var dir  = parseInt(direction.value, 10); 
-        if(dir==0){
-            DIRECTED = false   
-        }else{
-            DIRECTED = true   
-        }
-        vizualize()
-    }
-}
+
 
 
 
 function vizualize(){
     try {
-        // UNDIRECTED
-        if(!DIRECTED){
-            graph = transform_for_vizualization(edges, nodes);
-            visualizeStaticGraph(graph, svg);
-
-        // DIRECTED    
-        }else{
-            edges = setDirection(edges)
-            graph = transform_for_vizualization(edges, nodes);
-            visualizeStaticGraphDirected(graph, svg);
-        }
+        graph = transform_for_vizualization(edges, nodes);
+        visualizeStaticGraph(graph, svg);
     } catch (error) {
         errorPage()
     }
 }
 
+
+
 function generateGraph(){
     graph = generate_valid_graph();
-    [n, edges, nodes] = graph
+
+    function disconnect(links){
+        var remove = [0,0,1,1,1,2,3,3,4,4,4,4]
+
+        var remove_amount= getRandomElement(remove)
+        links = shuffle(links)
+
+
+        return links.splice(0, edges.length-remove_amount);
+    }
+    // disconnect()
+    [n,  edges, nodes] = graph
+
+    edges = disconnect(edges)
 }
+
+
+
 
 
 
