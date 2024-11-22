@@ -2,16 +2,15 @@
     color: #BAD80F;;
     flex: 1; 
     overflow: visible;
-    margin: 1% 1% 1% 10%;
+    margin: 1% 1% 1% 1%;
+    margin: 1% 1% 1% 0%;;
     display: flex;
     flex-direction: column;
     position: relative;
     align-items: center;
+    align-content: center;
+
 }
-/* .node_data{
-    color: #FDFFE9;
-    font-size: 16px;
-} */
 #stack {
     width: auto;
     border-collapse: collapse;

@@ -4,14 +4,13 @@ export const HEIGHT = 300
 
 export const LIGHT_BLUE = "#3972D5"
 export const YELLOW = "#BAD80F"
-export const NATURAL = "#FDFFE9"
+export const NATURAL = "#EFF2CD"
 
 export const INCEREMENT = 100;
 export const NODE_MAP = new Map();
 
 
 for (let i = 0; i < 10; i++) {
-    // Convert the number to the corresponding capital letter by using ASCII codes
     const letter = String.fromCharCode(65 + i); 
     NODE_MAP.set(i, letter);
 }
@@ -201,14 +200,6 @@ export function generate_valid_graph(){
     return null;
 }
 
-export function errorPage(){
-    document.body.innerHTML = ''; 
-    const errorMessage = document.createElement('div');
-    errorMessage.innerText = 'An error has occurred. Please try again later.';
-    errorMessage.style.color = 'red';
-    document.body.appendChild(errorMessage);
-}
-
 
 
 
@@ -266,8 +257,8 @@ export function visualizeStaticGraph(graph, svg) {
         .attr("y", d => d.y+1)
         .attr("text-anchor", "middle") 
         .attr("dominant-baseline", "middle") 
-        .text(d => d.id);
-        // .text(d => NODE_MAP.get(d.id));
+        // .text(d => d.id);
+        .text(d => NODE_MAP.get(d.id));
 }
 
 export function generateSrcInput(src_selector, n){
@@ -302,4 +293,13 @@ export function generateDstInput(dst_selector, n){
         dst_selector.appendChild(option);
   
     }
+}
+
+
+export function errorPage(){
+    document.body.innerHTML = ''; 
+    const errorMessage = document.createElement('div');
+    errorMessage.innerText = 'An error has occurred. Please try again later.';
+    errorMessage.style.color = 'red';
+    document.body.appendChild(errorMessage);
 }

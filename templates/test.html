@@ -3,89 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single-Column Table</title>
+    <title>Preformatted Code Example</title>
     <style>
-        /* Center table */
-        .single-column-table {
-            width: 50%; /* Adjust width as needed */
-            margin: 20px auto;
-            border-collapse: collapse;
+ 
+
+        #code_container{
+            background-color: gray;
+            /* border-radius: 10px;
+            padding: 0.5% ;
+            border: 1px dashed #AE2626;
+            width: auto;
+            margin: 0 auto; 
+            height: auto; */
+            margin: 0; 
+            padding: 0;
+
+        }
+        #code_title{
+        /* font-family:"Nulshock" ;
+        color: #AE2626;
+        padding: 0px; */
+        margin: 0; 
+        padding: 0;
         }
 
-        /* Table cell styles */
-        .single-column-table td {
-            padding: 15px;
-            background-color: #f2f2f2;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        /* Table header style */
-        .single-column-table th {
-            padding: 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 20px;
+        #code{
+            margin: 0; 
+            padding: 0;
+            white-space: pre-wrap; 
+            /* font-size: 14px;
+            color: #AE2626; */
         }
     </style>
 </head>
 <body>
 
-    <table class="single-column-table">
-        <tr>
-            <th>Single Column Table</th>
-        </tr>
-       
-        <tr>
-            <td>Row 1</td>
-        </tr>
+<div id="code_container">
+    <pre id="code">
+    function BellmanFord(Graph, source):
+    Initialize distances[source] = 0, all other distances = ∞
+    for i = 1 to V-1:
+        for each edge (u, v, weight) in Graph:
+            if distances[u] + weight < distances[v]:
+                distances[v] = distances[u] + weight
 
-        <tr>
-            <td>Row 2</td>
-        </tr>
-        <tr>
-            <td>Row 3</td>
-        </tr>
-        <tr>
-            <td>Row 4</td>
-        </tr>
-    </table>
+    for each edge (u, v, weight) in Graph:
+        if distances[u] + weight < distances[v]:
+            print("Graph contains a negative weight cycle")
+            return
+
+    print("Shortest distances:", distances)
+    </pre>
+</div>
 
 </body>
-
-
-
-
-
-<script>
-    function addRow() {
-        var table = document.getElementById("myTable"); 
-        var newRow = table.insertRow(); 
-
-        var cell1 = newRow.insertCell(0);
-        var cell2 = newRow.insertCell(1);
-
-        cell1.innerHTML = "New Row, Column 1";
-        cell2.innerHTML = "New Row, Column 2";
-    }
-
-    function removeRow() {
-        var table = document.getElementById("myTable");
-        var rowCount = table.rows.length; 
-
-        if (rowCount > 1) {
-            table.deleteRow(rowCount - 1); 
-        } else {
-            alert("No more rows to remove");
-        }
-    }
-</script>
-
-
 </html>
-
-
-

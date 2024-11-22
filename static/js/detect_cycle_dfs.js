@@ -29,6 +29,7 @@ var direction = document.getElementById('direction');
 direction.addEventListener("change", changeDirection);
 var DIRECTED = true
 
+var tempInput = document.getElementById('temp')
 
 
 
@@ -58,7 +59,7 @@ function cyclePath(neighbour,path){
 
 function waitForTimeout() {
     return new Promise(resolve => {
-        setTimeout(resolve, INCEREMENT);  
+        setTimeout(resolve, -(tempInput.value-tempInput.max)); 
     });
 }
 

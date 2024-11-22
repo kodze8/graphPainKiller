@@ -19,7 +19,7 @@ export function edgesToAdjDirected(n, edges) {
     return adj;
 }
 
-export function setDirection(edges, ) {
+export function setDirection(edges) {
     for (let edge of edges) {
         if (Math.random() > 0.5) {
             [edge[0], edge[1]] = [edge[1], edge[0]];
@@ -27,6 +27,18 @@ export function setDirection(edges, ) {
     }
     return edges
 }
+
+
+
+export function addNegativeValues(edges){
+    for (let edge of edges) {
+        if (Math.random() > 0.5) {
+            edge[2] = -edge[2];
+        }
+    }
+    return edges
+}
+    
 
 
 
@@ -102,9 +114,28 @@ export function visualizeStaticGraphDirected(graph, svg) {
 }
 
 
-// export function generateSrcInput(src_selector, n){
 
-// }
+
+export function visualizeStaticGraphDirectedWeighted(graph, svg) {
+    visualizeStaticGraphDirected(graph, svg)
+    svg.append("g")
+        .selectAll("text")
+        .data(graph.links)
+        .enter().append("text")
+        .attr("class", "weight")
+        .attr("x", d => {
+            const sourceNode = graph.nodes.find(node => node.id === d.source);
+            const targetNode = graph.nodes.find(node => node.id === d.target);
+            return sourceNode.x + (targetNode.x - sourceNode.x) * 0.35;
+        })
+        .attr("y", d => {
+            const sourceNode = graph.nodes.find(node => node.id === d.source);
+            const targetNode = graph.nodes.find(node => node.id === d.target);
+            return sourceNode.y + (targetNode.y - sourceNode.y) * 0.35;
+        })
+        .text(d => d.weight); 
+}
+
 
 
 

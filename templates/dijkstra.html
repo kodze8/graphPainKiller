@@ -29,7 +29,9 @@
 
         <!-- Graph Section  -->
         <div id="graph_container">
-            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+            <div> 
+                <svg id="graph_grid" width="500" height="300"></svg>
+            </div>
             
             <div id="button_block">
                 <div id="left">
@@ -64,6 +66,17 @@
             </div>
         </div>
 
+        <div id="temp_container">
+            <label class="temp_label" for="temp">fast</label>
+            <div>
+                <input  id="temp"  type="range" min="100" max="2000" step="100" value="1500">
+            </div>
+            <label class="temp_label"  id="low" for="temp">slow</label>
+        </div>
+
+
+
+
 
 
         <!-- Table Section  -->
@@ -84,9 +97,6 @@
                 <label id="distances" for="">Distances from SRC:</label>
                 <h4 id="visited"></h4>
             </div>
-
-            
-
         </div>
 
     </div>
@@ -99,17 +109,20 @@
                 Dijkstra's Algorithm is a method used to find the shortest path between two points in a graph, where the edges have non-negative weights. It starts by setting the distance to the starting point as 0 and the distances to all other points as infinity. Then, it repeatedly selects the point with the smallest known distance, updates the distances to its neighboring points, and marks it as "visited." This process continues until the algorithm has found the shortest path to every point. Dijkstra’s Algorithm is widely used in navigation systems, like GPS, and for network routing. 
         </div>
 
-        <div id="code_container">
-            <label id="code_title">Pseudo Code</label>
-            <p id="code">
-                Set(s)=0,t(x)=∞ for x≠s and S=∅. <br>
-                while there exists an x∈V ∖ S with t(x)≠∞:<br>
-                &nbsp;pick u ∈ V∖S with minimum t add u to S<br>
-                &nbsp;for all z ∈ N(u)∖S:<br>
-                &nbsp;&nbsp;t(z) to min(t(z), t(u) + w(uz)) <br>
-                return t
-            </p>
+        <div id="code_block">
+            <div id="code_container">
+                <label id="code_title">Pseudo Code</label>
+                <pre id="code">
+    Set(s) = 0, t(x) = ∞ for x ≠ s and S = ∅.
+    while there exists an x ∈ V \ S with t(x) ≠ ∞:
+        pick u ∈ V \ S with minimum t, add u to S
+        for all z ∈ N(u) \ S:
+            t(z) = min(t(z), t(u) + w(uz))
+    return t
+                </pre>
+            </div>
         </div>
+
 
     </div>
 

@@ -1,0 +1,27 @@
+#data_container {
+    left: -30px;
+    margin-left: 30px;
+}
+#table_container {
+    gap: 20px;
+    display: flex;
+}
+
+#edge-table {
+    font-size: 16px; 
+    color: #EFF2CD;
+    width: 20%; 
+    border-collapse: collapse; 
+    
+}
+#edge-table th, #edge-table td{
+    padding: 5px 20px; 
+    text-align: center;
+    border: 0.5px dashed wheat; 
+    
+}
+#data-table th{
+    color: red;
+}
+
+

@@ -50,6 +50,22 @@
             </div>
         </div>
 
+        <div id="temp_container">
+            <label class="temp_label" for="temp">fast</label>
+            <div>
+              <input
+                id="temp"
+                type="range"
+                min="100"
+                max="2000"
+                step="100"
+                value="1500"
+              />
+            </div>
+    
+            <label class="temp_label" id="low" for="temp">slow</label>
+        </div>
+
 
         <div id="stack_conatainer">
             <table id="stack">
@@ -82,26 +98,25 @@
 
         <div id="code_container">
             <label id="code_title">Pseudo Code</label>
-            <p id="code">
-                DFS(graph, node, visited, recursion_stack): <br>
-                &nbsp;// Mark the current node as visited<br>
-                &nbsp;visited[node] = true<br>
-                &nbsp;recursion_stack[node] = true<br>
-            
-                &nbsp;// Visit all the neighbors of the current node<br>
-                &nbsp;for each neighbor in graph[node]:<br>
-                &nbsp;&nbsp;if not visited[neighbor]:<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;DFS(graph, neighbor, visited, recursion_stack)<br>
-                &nbsp;&nbsp;else if recursion_stack[neighbor]:<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;// A cycle is detected<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;return true<br>
-            
-                &nbsp;// Backtrack, remove the node from recursion stack<br>
-                &nbsp;recursion_stack[node] = false<br>
-            
-                &nbsp;return false<br>
-            </p>
-            
+            <pre id="code">
+DFS(graph, node, visited, recursion_stack):
+    // Mark the current node as visited
+    visited[node] = true
+    recursion_stack[node] = true
+
+    // Visit all the neighbors of the current node
+    for each neighbor in graph[node]:
+        if not visited[neighbor]:
+            DFS(graph, neighbor, visited, recursion_stack)
+        else if recursion_stack[neighbor]:
+            // A cycle is detected
+            return true
+
+    // Backtrack, remove the node from recursion stack
+    recursion_stack[node] = false
+
+    return false
+                </pre>                
         </div>
     </div>
 

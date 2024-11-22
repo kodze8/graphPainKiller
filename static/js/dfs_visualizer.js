@@ -6,19 +6,22 @@ import {
     generateSrcInput, 
     errorPage, 
     NODE_MAP, 
-    LIGHT_BLUE,
     YELLOW, 
     NATURAL, 
-    INCEREMENT, 
 } from './general/graphUtils.js';
 
-import {addRow, clearStack, removeRow} from "./general/stack_tracker.js"
+import {
+    addRow, 
+    clearStack, 
+    removeRow
+} from "./general/stack_tracker.js"
 
 const svg = d3.select("svg")
 let n, edges, nodes; 
 var graph;
 
 var src_selector = document.getElementById('src');
+var tempInput = document.getElementById('temp');
 
 
 // marks the visited nodes
@@ -30,34 +33,34 @@ function markNode(val, color = YELLOW) {
 }
 
 // dfs algorithm 
-function dfs(edges, src, n, callback){
-   var adj = edges_to_adj(n, edges)
-   let delay = 0;
-
-   function rec(start, seen, path){
-       path.push(start)
-
-       setTimeout(() => {
-            addRow(NODE_MAP.get(start))
-            markNode(start);
-        }, delay);
-
-       delay += INCEREMENT; 
-
-       seen.add(start)
-       for(var neigbour of adj.get(start)){
-           if(!seen.has(neigbour)){
-               rec(neigbour, seen, path)
-           }
-       }
-       return path
-   }
-   var res = rec(src, new Set(), [])
-
-   setTimeout(() => {callback();}, delay);
-
-   return res
+function waitForTimeout() {
+    return new Promise(resolve => {
+        setTimeout(resolve, -(tempInput.value-tempInput.max)); 
+    });
 }
+function dfs(edges, src, n, callback){
+    var adj = edges_to_adj(n, edges)
+
+    async function rec(start, seen, path){
+        path.push(start)
+ 
+        await waitForTimeout()
+        addRow(NODE_MAP.get(start))
+        markNode(start);
+
+        seen.add(start)
+        for(var neigbour of adj.get(start)){
+            if(!seen.has(neigbour)){
+                await rec(neigbour, seen, path)
+            }
+        }
+        return path
+    }
+    (async () => {
+        await rec(src, new Set(), []);
+        callback(); 
+    })();
+ }
 
 
 // function for start dfs. 
@@ -101,7 +104,6 @@ function vizualize(){
         errorPage()
     }
 }
-
 
 vizualize()
 document.getElementById("start").addEventListener("click", startDFS);

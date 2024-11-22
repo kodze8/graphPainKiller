@@ -29,6 +29,7 @@ const src_selector = document.getElementById('src');
 const dst_selector = document.getElementById('dst');
 
 var process_goes = false;
+var temp =  document.getElementById('temp')
 
 function markNode(val, color) {
     svg.selectAll('circle')
@@ -37,6 +38,12 @@ function markNode(val, color) {
         .attr('stroke-width', 8);
 }
 
+
+function waitForTimeout(){
+    return new Promise(resolve => {
+        setTimeout(resolve, -(temp.value-temp.max)); 
+    });
+}
 
 function dijkstra(edges, n, src, dst, callback){
     var adj = edges_to_adj(n, edges)
@@ -51,21 +58,18 @@ function dijkstra(edges, n, src, dst, callback){
     var previous_neighbours = new Map();
     previous_neighbours.set(src, [])
 
-    function rec(){
+    async function rec(){
         if(seen.size==n){
             let last = shortestPath[shortestPath.length-1]
             previous_neighbours.get(last).push(last)
             msg.innerHTML = previous_neighbours.get(last)
             .map(element => NODE_MAP.get(element))
             .join(", "); 
-        
-            callback();
             return
         }
 
         let minDistance = Infinity;
         let minNode = null;
-
 
         for(var key=0; key<distances.length; key++){           
             if (distances[key] <= minDistance && !seen.has(key)) {
@@ -73,7 +77,6 @@ function dijkstra(edges, n, src, dst, callback){
                 minNode = key; 
             }
         }
-
         shortestPath.push(minNode)
         seen.add(minNode)
 
@@ -86,7 +89,6 @@ function dijkstra(edges, n, src, dst, callback){
             previous_neighbours.get(dst).push(dst)
             msg.innerHTML = previous_neighbours.get(dst)
             .map(element => NODE_MAP.get(element))
-            callback();
             return
         }
 
@@ -97,7 +99,7 @@ function dijkstra(edges, n, src, dst, callback){
                     if (previous_neighbours.has(minNode)) {
                         let updatedArray = previous_neighbours.get(minNode).slice(); 
                         updatedArray.push(minNode);
-                    
+            
                         previous_neighbours.set(neighbour, updatedArray);
                     }else{
                     
@@ -108,11 +110,14 @@ function dijkstra(edges, n, src, dst, callback){
                 }
             }
         }
-        setTimeout(rec, INCEREMENT)
+        await waitForTimeout();
+        await rec()
     }
-    rec()
-
-    // return [distances, shortestPath]
+    (async  () => {
+        await rec();
+        callback();
+    })();
+    
 }
 
 
@@ -152,7 +157,7 @@ function createTableHeaders(n) {
     headers.forEach(headerText => {
         const th = document.createElement('th');
         th.textContent = headerText;
-        th.style.color = NATURAL;
+        th.style.color = LIGHT_BLUE;
         headerRow.appendChild(th);
     });
 }

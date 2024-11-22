@@ -26,6 +26,7 @@ let n, edges, nodes;
 var graph;
 const update = document.getElementById("update")
 
+const tempInput = document.getElementById("temp")
 
 
 // marks the visited nodes
@@ -65,9 +66,10 @@ function cyclePath(neighbour,path){
 }
 
 
+
 function waitForTimeout() {
     return new Promise(resolve => {
-        setTimeout(resolve, 1000);  
+        setTimeout(resolve, -(tempInput.value-tempInput.max)); // Use the value directly from the input
     });
 }
 
@@ -214,4 +216,5 @@ generateGraph()
 vizualize()
 document.getElementById("start").addEventListener("click", startCycleDectection);
 document.getElementById("refresh").addEventListener("click", changeGraph);
+
 

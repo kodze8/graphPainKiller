@@ -47,6 +47,15 @@
 
         </div>
 
+        <div id="temp_container">
+            <label class="temp_label" for="temp">fast</label>
+            <div>
+                <input  id="temp"  type="range" min="100" max="2000" step="100" value="1500">
+            </div>
+          
+            <label class="temp_label"  id="low" for="temp">slow</label>
+        </div>
+
         <div id="stack_conatainer">
             <h4 id="visited">BFS Path: </h4>
         </div>
@@ -67,22 +76,23 @@
 
         <div id="code_container">
             <label id="code_title">Pseudo Code</label>
-            <p id="code">
-                BFS(graph, start_node, visited): <br>
-                &nbsp;// Create a queue for BFS<br>
-                &nbsp;queue = [start_node] <br>
-                &nbsp;visited[start_node] = true <br>
+<pre id="code">
+BFS(graph, start_node, visited):
+    // Create a queue for BFS
+    queue = [start_node]
+    visited[start_node] = true
 
-                &nbsp;// While there are nodes to visit<br>
-                &nbsp;while queue is not empty: <br>
-                &nbsp;&nbsp;current_node = queue.pop(0) <br>
+    // While there are nodes to visit
+    while queue is not empty:
+        current_node = queue.pop(0)
+        
+        // Visit all the neighbors of the current node
+        for each neighbor in graph[current_node]:
+            if not visited[neighbor]:
+                visited[neighbor] = true
+                queue.append(neighbor)
+</pre>
                 
-                &nbsp;&nbsp;// Visit all the neighbors of the current node<br>
-                &nbsp;&nbsp;for each neighbor in graph[current_node]: <br>
-                &nbsp;&nbsp;&nbsp;if not visited[neighbor]: <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;visited[neighbor] = true <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;queue.append(neighbor) <br>
-            </p>
 
         </div>
     </div>

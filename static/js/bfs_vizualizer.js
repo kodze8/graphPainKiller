@@ -19,9 +19,9 @@ var graph;
 
 var src_selector = document.getElementById('src');
 
-
-
 const update = document.getElementById("visited")
+
+const temp = document.getElementById('temp')
 
 // marks the visited nodes
 function markNode(val, color = YELLOW) {
@@ -32,6 +32,12 @@ function markNode(val, color = YELLOW) {
 }
 
 
+function waitForTimeout(){
+   return new Promise(resolve =>{
+        setTimeout(resolve, -(temp.value - temp.max));
+   });
+}
+
 
 function bfs(edges, src, n, callback){
     var adj = edges_to_adj(n, edges)
@@ -41,8 +47,8 @@ function bfs(edges, src, n, callback){
     seen.add(src)
     var path = []
 
-    function helper(){
-        if(queue.length!=0){
+    async function helper(){
+        while(queue.length!=0){
             var cur = queue.shift()
             update.innerHTML +=` ${NODE_MAP.get(cur)}`;
             markNode(cur);  
@@ -53,16 +59,13 @@ function bfs(edges, src, n, callback){
                     seen.add(k)
                 }
             }
-        }else{
-            callback();
-            return path;
+            await waitForTimeout()
         }
-        setTimeout(helper, INCEREMENT)
+        callback();
     }
-    return helper();
+
+    helper();
 }
-
-
 
 
 

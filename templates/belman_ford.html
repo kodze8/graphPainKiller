@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Natural D3 Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css" />
+    <link rel="stylesheet" href="../style/css/belman_ford.css" />
+  </head>
+
+  <body>
+    <!-- Block 1 -->
+    <div id="header_block">
+      <div id="menu_container">
+        <a id="menu" href="../index.html">MENU</a>
+      </div>
+
+      <div id="title_container">
+        <h4 id="title">Belman Ford Algorithm</h4>
+      </div>
+    </div>
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+      <!-- Graph Section  -->
+      <div id="graph_container">
+        <div><svg id="graph_grid" width="500" height="300"></svg></div>
+
+        <div id="button_block">
+          <div id="left">
+            <div id="src_container">
+              <select name="src" id="src"></select>
+            </div>
+            <div id="dst_container">
+              <select name="dst" id="dst"></select>
+            </div>
+          </div>
+          <div id="right">
+            <div id="refresh_container">
+              <button id="refresh">Refresh</button>
+            </div>
+
+            <div id="start_container">
+              <button id="start">Find Shortest Path</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="path_container">
+          <div>
+            <label for="">Shortest Paths: </label>
+          </div>
+
+          <div>
+            <p id="msg"></p>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div id="temp_container">
+        <label class="temp_label" for="temp">fast</label>
+        <div>
+          <input
+            id="temp"
+            type="range"
+            min="100"
+            max="2000"
+            step="100"
+            value="1500"
+          />
+        </div>
+
+        <label class="temp_label" id="low" for="temp">slow</label>
+      </div>
+
+      <!-- Table Section  -->
+      <div id="data_container">
+        <div id="table_container">
+          <div>
+            <table id="edge-table">
+              <thead>
+                <tr>
+                  <th>Edges</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will be added here -->
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <table id="data-table">
+              <thead>
+                <tr>
+                  <!-- Headers will be added here by JavaScript -->
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will be added here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Block 3  -->
+    <div id="info_block">
+      <div id="info_container">
+        <p id="info">
+          The Bellman-Ford algorithm is used to find the shortest path from a starting vertex to all others in a directed graph with potentially negative edge weights. It works by repeatedly relaxing all edges, updating the shortest known distance if a shorter path is found. The algorithm starts by setting the distance to the source as 0 and others as infinity, then performs V - 1 iterations (where V is the number of vertices). This ensures that the shortest paths are found, as the longest possible path has at most V - 1 edges.
+          <br>
+          Bellman-Ford is especially effective on directed graphs and can handle negative edge weights, unlike Dijkstra's algorithm. A key feature is its ability to detect negative weight cycles. If, after V - 1 iterations, any edge can still be relaxed, the algorithm identifies a negative cycle, as the path length can keep decreasing indefinitely. If no further changes occur, the shortest paths are confirmed.
+        </p>
+      </div>
+
+      <div id="code_container">
+        <label id="code_title">Pseudo Code</label>
+      
+          <pre id="code">
+function BellmanFord(Graph, source):
+    Initialize distances[source] = 0, all other distances = ∞
+    for i = 1 to V-1:
+        for each edge (u, v, weight) in Graph:
+            if distances[u] + weight < distances[v]:
+                distances[v] = distances[u] + weight
+    
+    for each edge (u, v, weight) in Graph:
+        if distances[u] + weight < distances[v]:
+            print("Graph contains a negative weight cycle")
+            return
+    
+    print("Shortest distances:", distances)
+          </pre>
+      </div>
+
+    </div>
+
+    <script type="module" src="../static/js/belman_ford.js"></script>
+  </body>
+</html>
