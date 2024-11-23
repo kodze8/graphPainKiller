@@ -9,7 +9,8 @@ import {
     LIGHT_BLUE,YELLOW, NATURAL, 
     INCEREMENT,
     graphGenerator,
-    getRandomElement
+    getRandomElement,
+    vizualizeNumericGraph
 } from './general/graphUtils.js';
 
 import { 
@@ -19,12 +20,19 @@ import {
 } from './general/directedGraphUtils.js';
 
 
-
+import { 
+    clearEdgeTable, 
+    createEdgeTable, 
+    colorEdgeCell, 
+    createTableHeaders, 
+    addRow, 
+    clearTable
+} from './general/test.js';
 
 const svg = d3.select("svg")
 let n, edges, nodes; 
 var graph;
-const update = document.getElementById("update")
+
 
 const tempInput = document.getElementById("temp")
 
@@ -115,18 +123,28 @@ function unionFind(edges, n){
           markNode(i, colors[i])
         }
     
+        var i = 0; 
         for(var edge of edges){
             await waitForTimeout()
             var cycle_detected = false
+
+
+
             if(parents[edge[0]]==parents[edge[1]])
                 cycle_detected = true
                 
         
             union(edge[0], edge[1], parents, colors)
-            update.innerHTML+=`(${edge[0]}, ${edge[1]}) - ${parents}<br>`
+
+            colorEdgeCell(document, i)
+            addRow(parents, i, document, true, false)
+
+
+            i++;
             if(cycle_detected)
-                update.innerHTML+="CYCLE!!!<br>"
-           
+                console.log("Hi")
+            // DO something here 
+            
         }
         process_goes = false;
 
@@ -156,7 +174,10 @@ function startCycleDectection(){
             .data(graph.nodes)
             .attr("fill", NATURAL)
             .attr('stroke', 'none')
-        update.innerHTML = ""
+        clearTable(document)
+        colorEdgeCell(document, null)
+        createTableHeaders(n, document, false)
+
         unionFind(edges,n);
     
    }
@@ -169,7 +190,10 @@ function startCycleDectection(){
 function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
-        update.innerHTML = ""
+        clearEdgeTable(document);
+        clearTable(document);
+
+        colorEdgeCell(document, null)
         generateGraph();
         vizualize();
     }
@@ -182,6 +206,8 @@ function vizualize(){
     try {
         graph = transform_for_vizualization(edges, nodes);
         visualizeStaticGraph(graph, svg);
+        createEdgeTable(edges, document);
+        createTableHeaders(n, document, false);
     } catch (error) {
         errorPage()
     }
@@ -206,8 +232,6 @@ function generateGraph(){
 
     edges = disconnect(edges)
 }
-
-
 
 
 

@@ -22,10 +22,17 @@ import {
     INCEREMENT
 } from './general/graphUtils.js';
 
+import { 
+    clearEdgeTable, 
+    createEdgeTable, 
+    createTableHeaders, 
+    addRow, 
+    clearTable, 
+    colorEdgeCell
+} from './general/test.js';
 
 
 const svg = d3.select("svg")
-// const update = document.getElementById("visited")
 const msg = document.getElementById("msg")
 let n, edges, nodes; 
 var graph;
@@ -69,7 +76,7 @@ function belmanFord(edges, n, src, dst, callback){
         var negativeCycleDetected = false;
 
         for(var i =0; i<n; i++){
-            var row =  addRow(distances, i)
+            var row =  addRow(distances, i, document)
             var cell = row.cells[src+1];  
             cell.textContent = 0;
 
@@ -80,7 +87,7 @@ function belmanFord(edges, n, src, dst, callback){
             for(var e = 0; e<edges.length; e++){   
 
 
-                changeEdgeCell(e)
+                colorEdgeCell(document, e)
                 var cell = row.cells[edges[e][1]+1];  
            
                 if(distances[edges[e][1]] > distances[edges[e][0]]+edges[e][2]){
@@ -88,9 +95,6 @@ function belmanFord(edges, n, src, dst, callback){
                     distances[edges[e][1]] = distances[edges[e][0]]+edges[e][2]
                     changeHappened = true
 
-                    // if(!previous_neighbours.has(edges[e][0])){
-                    //     previous_neighbours.set(edges[e][0],[]);
-                    // }
                     var temporary = Array.from(previous_neighbours.get(edges[e][0]));
                     temporary.push(edges[e][1]);
                     previous_neighbours.set(edges[e][1], temporary);
@@ -100,7 +104,7 @@ function belmanFord(edges, n, src, dst, callback){
                 cell.textContent = distances[edges[e][1]] === Infinity ? '∞' : distances[edges[e][1]]; 
                
             }
-            changeEdgeCell(null)
+            colorEdgeCell(document, null)
 
             for (var c = 0; c < row.cells.length; c++) {
                 var empty_cell = row.cells[c];  
@@ -146,19 +150,7 @@ function belmanFord(edges, n, src, dst, callback){
 
 
 
-function changeEdgeCell(e = null){
-    const edge_table = document.getElementById('edge-table').getElementsByTagName('tbody')[0];
-    if(e==null){
-        for (let i = 0; i < edge_table.rows.length; i++) {
-            const edge_cell = edge_table.rows[i].cells[0];
-            edge_cell.style.color = NATURAL;
-        }
-    }else{
-        var edge_cell = edge_table.rows[e].cells[0]; 
-        edge_cell.style.color = YELLOW;
-    }
 
-}
 
 
 function startBelmanFord(){
@@ -170,8 +162,8 @@ function startBelmanFord(){
             .attr('stroke', 'none')
         msg.innerHTML = '';
         
-        clearTable();
-        createTableHeaders(n)
+        clearTable(document);
+        createTableHeaders(n, document)
         
         var src = parseInt(src_selector.value, 10);  
         var dst = parseInt(dst_selector.value, 10);    
@@ -181,79 +173,6 @@ function startBelmanFord(){
         });
     }
 }
-
-
-
-
-function AddEdges(edges){
-    const table = document.getElementById('edge-table').getElementsByTagName('tbody')[0];
-    for(var e = 0; e<edges.length; e++){    
-        var newRow = table.insertRow(); 
-        var cell = newRow.insertCell(0); 
-        cell.textContent = `(${NODE_MAP.get(edges[e][0])},${NODE_MAP.get(edges[e][1])})`; 
-        cell.style.color = NATURAL; 
-    }
-}
-
-// Function to create table headers
-function createTableHeaders(n) {
-    var lst = []
-    lst.push("iter")
-    for( var i=0; i<n; i++){
-        lst.push(NODE_MAP.get(i))
-    }
-    const headers = lst;
-
-    const headerRow = document.querySelector('#data-table thead tr');
-
-    headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        th.style.color = NATURAL;
-        headerRow.appendChild(th);
-    });
-}
-
-
-
-function addRow(distances, iteration){
-    const table = document.getElementById('data-table').getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-
-    var cell = newRow.insertCell(0);
-    cell.textContent = iteration;
-    cell.style.color = LIGHT_BLUE; 
-
-    for(var i=0; i<distances.length; i++){
-        var cell = newRow.insertCell(i+1);
-        cell.style.color = NATURAL; 
-    }
-    return newRow
-}
-
-
-
-function clearTable() {
-    const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
-    const headerRow = document.querySelector('#data-table thead tr');
-
-    while (tableBody.rows.length > 0) {
-        tableBody.deleteRow(0);
-    }
-
-    while (headerRow.cells.length > 0) {
-        headerRow.deleteCell(0);
-    }
-}
-function clearEdgeTable(){
-    const tableBody = document.getElementById('edge-table').getElementsByTagName('tbody')[0];
-
-    while (tableBody.rows.length > 0) {
-        tableBody.deleteRow(0);
-    }
-
-}
-
 
 
 function vizualize(){
@@ -270,10 +189,9 @@ function vizualize(){
         visualizeStaticGraphDirectedWeighted(graph, svg);
         
 
-        createTableHeaders(n);  
-        AddEdges(edges);
+        createTableHeaders(n, document);  
+        createEdgeTable(edges, document);
 
-        // generateInputButton();
         generateSrcInput(src_selector, n)
         generateDstInput(dst_selector, n );
 
@@ -286,13 +204,11 @@ function vizualize(){
 function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
-        // update.innerHTML = '';
         msg.innerText='';
         src_selector.innerHTML = "";
         dst_selector.innerHTML = "";
-        clearTable();
-        clearEdgeTable();
-
+        clearTable(document);
+        clearEdgeTable(document);
         vizualize();
     }
 } 

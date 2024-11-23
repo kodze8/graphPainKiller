@@ -261,6 +261,12 @@ export function visualizeStaticGraph(graph, svg) {
         .text(d => NODE_MAP.get(d.id));
 }
 
+export function vizualizeNumericGraph(graph, svg){
+    visualizeStaticGraph(graph, svg)
+    svg.selectAll(".label")
+    .text(d => d.id);
+}
+
 export function generateSrcInput(src_selector, n){
     // Default value for src is 0
     const defaultOption_src = new Option("Choose SRC", 0, true, true);
