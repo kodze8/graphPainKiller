@@ -31,6 +31,8 @@ var DIRECTED = true
 
 var tempInput = document.getElementById('temp')
 
+var table = document.getElementById('stack')
+
 
 
 // marks the visited nodes
@@ -73,7 +75,7 @@ function detectCycle(edges, n, callback) {
         path.push(src);
         markNode(src, LIGHT_BLUE)
         //update.innerHTML = `path: ${path}`;
-        addRow(NODE_MAP.get(src))
+        addRow(NODE_MAP.get(src), table)
         
 
         for (var neighbour of adj.get(src)) {
@@ -94,7 +96,7 @@ function detectCycle(edges, n, callback) {
                     await waitForTimeout();
                     var removed = path.pop();
                     markNode(removed, null)
-                    removeRow()
+                    removeRow(table)
                 }
             }
         }
@@ -118,7 +120,7 @@ function detectCycleDirected(edges, n, callback) {
         path.push(src);
         visited.add(src);
         markNode(src, LIGHT_BLUE);
-        addRow(NODE_MAP.get(src))
+        addRow(NODE_MAP.get(src), table)
         
 
         for (var nei of adj.get(src)) {
@@ -136,7 +138,7 @@ function detectCycleDirected(edges, n, callback) {
         await waitForTimeout();
         path.pop();
         markNode(src, null);
-        removeRow();
+        removeRow(table);
         return false; 
     }
 
@@ -181,7 +183,7 @@ function startCycleDectection(){
             .attr("fill", NATURAL)
             .attr('stroke', 'none')
 
-        clearStack()
+        clearStack(table)
         update.innerHTML = ""
         var dir  = parseInt(direction.value, 10); 
 
@@ -207,7 +209,7 @@ function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
         update.innerHTML = ""
-        clearStack()
+        clearStack(table)
         generateGraph();
         vizualize();
     }

@@ -11,13 +11,14 @@
     align-content: center;
 
 }
-#stack {
+#stack, .stack {
     width: auto;
     border-collapse: collapse;
     text-align: center; 
 }
-#stack th, #stack td {
-    padding: 5px;
+#stack th, #stack td ,.stack th, .stack td{
+    padding: 5px 15px 5px 15px;
+    
     border: 1px dashed wheat;; 
     text-align: center; 
     vertical-align: middle; 

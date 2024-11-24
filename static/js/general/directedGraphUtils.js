@@ -110,7 +110,8 @@ export function visualizeStaticGraphDirected(graph, svg) {
         .attr("y", d => d.y + 1)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        .text(d => NODE_MAP.get(d.id));
+        .text(d => d.id);
+        // .text(d => NODE_MAP.get(d.id));
 }
 
 

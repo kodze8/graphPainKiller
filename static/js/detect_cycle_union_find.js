@@ -91,15 +91,6 @@ function randomRGBColor() {
 
 
 function unionFind(edges, n){
-
-    function findParnet(a, parents){
-      if(parents[a] == a)
-        return a;
-      else
-        return findParnet(parents[a],parents)
-    }
-  
-
     async function union(a, b, parents, colors){
         var great_parent = parents[a];
         var temp = parents[b];

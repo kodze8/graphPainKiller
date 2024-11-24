@@ -22,6 +22,7 @@ var graph;
 
 var src_selector = document.getElementById('src');
 var tempInput = document.getElementById('temp');
+var table = document.getElementById('stack')
 
 
 // marks the visited nodes
@@ -45,7 +46,7 @@ function dfs(edges, src, n, callback){
         path.push(start)
  
         await waitForTimeout()
-        addRow(NODE_MAP.get(start))
+        addRow(NODE_MAP.get(start), table)
         markNode(start);
 
         seen.add(start)
@@ -73,7 +74,7 @@ function startDFS(){
             .attr("fill", NATURAL)
             .attr('stroke', 'none')
 
-        clearStack();
+        clearStack(table);
 
        var src = parseInt(src_selector.value, 10);  
        dfs(edges, src, n, ()=>{
@@ -86,7 +87,7 @@ function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
         src_selector.innerHTML = "";
-        clearStack();
+        clearStack(table);
         vizualize();
     }
 }

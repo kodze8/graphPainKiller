@@ -1,0 +1,22 @@
+#table_container{
+    display: flex;
+    gap: 70px;
+}
+
+#data_container{
+    overflow: visible;
+}
+
+#update_container{
+    margin-top: 25px;
+    display: flex;
+}
+
+#code_container{
+    margin-left: 130px;
+
+}
+  
+#update{
+    color: #EFF2CD;
+}

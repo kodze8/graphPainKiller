@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="../style/css/dijkstra.css">
+    <link rel="stylesheet" href="../style/css/dfs.css">
+    <link rel="stylesheet" href="../style/css/topological_sort.css">
+
+</head>
+<body>
+
+    <!-- Block 1 -->
+    <div id="header_block">
+        <div id="menu_container">
+                <a id="menu" href="../index.html">MENU</a>
+        </div>
+        <div id="title_container">
+            <h4 id="title">Topological Sort </h4>
+        </div>
+
+    </div>
+
+    <!-- Block 2 -->
+    <div id="graph_block">
+        <div id="graph_container">
+            <div> <svg id="graph_grid" width="500" height="300"></svg></div>
+            <div id="button_block">
+
+                <div id="left">
+                </div>
+
+                <div id="right">
+                    <div id="refresh_container">
+                        <button id="refresh">Refresh</button>
+                    </div>
+                
+                    <div id="start_container">
+                        <button id="start">Detect Cycle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="temp_container">
+            <label class="temp_label" for="temp">fast</label>
+            <div>
+              <input
+                id="temp"
+                type="range"
+                min="100"
+                max="2000"
+                step="100"
+                value="1500"
+              />
+            </div>
+    
+            <label class="temp_label" id="low" for="temp">slow</label>
+        </div>
+
+
+        <div id="data_container">
+            <div id="table_container">
+                <div>
+                    <table id="visited" class="stack">
+                        <tr>
+                            <th>Visited</th>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <table id="sorted" class="stack" >
+                        <tr>
+                            <th> Topological Sort </th>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+            <div id="update_container">
+                <p id="update"></p>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!-- Block 3  -->
+    <div id="info_block">
+        <div id="info_container">
+            <p id="info">
+                Topological Sort is used to order vertices in a Directed Acyclic Graph (DAG) such that for every edge 
+                a→b, vertex 
+                a comes before vertex 
+                b. In DFS-based Topological Sort, the algorithm visits each vertex and explores its neighbors recursively. When an edge from 
+                a→b is encountered, it indicates that 
+                b depends on 
+                a, so 
+                a must come before 
+                b in the final ordering.
+                After visiting all neighbors of a vertex, the vertex is pushed onto a stack. Once all vertices are processed, reversing the stack gives the correct topological order. This algorithm works only on DAGs, as cycles prevent a valid ordering.
+            </p>
+        </div>
+
+        <div id="code_container">
+            <label id="code_title">Pseudo Code</label>
+            <pre id="code">
+TopologicalSort(graph):
+    visited = empty set
+    stack = empty stack
+
+    for each node in graph:
+        if node not in visited:
+            DFS(graph, node, visited, stack)
+
+    return stack (reversed)
+
+DFS(graph, node, visited, stack):
+    visited[node] = true
+
+    for each neighbor in graph[node]:
+        if neighbor not in visited:
+            DFS(graph, neighbor, visited, stack)
+
+    stack.push(node)
+            
+            </pre>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script  type="module"  src="../static/js/topological_sort.js"></script>
+</body>
+</html>
