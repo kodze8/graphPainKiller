@@ -11,7 +11,7 @@ import {
 import { 
     edgesToAdjDirected,
     setDirection,
-    visualizeStaticGraphDirected
+    vizualizeDirectedNumericGraph
 } from './general/directedGraphUtils.js';
 
 import {
@@ -146,7 +146,7 @@ function vizualize(){
         [n, edges, nodes] = graph
         edges = setDirection(edges)
         graph = transform_for_vizualization(edges, nodes);
-        visualizeStaticGraphDirected(graph, svg);
+        vizualizeDirectedNumericGraph(graph, svg);
     } catch (error) {
         errorPage()
     }
