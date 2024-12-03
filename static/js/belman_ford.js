@@ -41,7 +41,6 @@ const src_selector = document.getElementById('src');
 const dst_selector = document.getElementById('dst');
 
 const tempInput = document.getElementById('temp')
-
 var process_goes = false;
 
 function markNode(val, color = YELLOW) {
@@ -58,9 +57,6 @@ function waitForTimeout() {
     });
 }
 
-
-
-// works well
 function belmanFord(edges, n, src, dst, callback){
     
     async function helper(edges, n, src) {
@@ -113,39 +109,52 @@ function belmanFord(edges, n, src, dst, callback){
                 }
             }
             await waitForTimeout()
-            if(changeHappened && i==n-1){
+            if(changeHappened && i == n-1){
                 negativeCycleDetected = true;
             }
            
             if(!changeHappened)
                 break        
         }
-
-
-        // Paths 
-        if(negativeCycleDetected){
-            msg.innerHTML = "Negtaive Cycle Detected !"
-        }else{
-            const transformFn = (x) => NODE_MAP.get(x);
-            function stringBuilder(map, transformFn) {
-                var res = ""
-                for (const [key, value] of map) {
-                    res += `${NODE_MAP.get(key)} (${distances[key]}): `;
-                    res += value.map(transformFn).join(", "); // Join the array into a string with commas
-                    res += "<br>";
-                    
-                }
-                return res;
-            }
-            const str = stringBuilder(previous_neighbours, transformFn);
-            msg.innerHTML = str
-
-        }        
+        showPaths(negativeCycleDetected,src, dst, previous_neighbours, distances);      
     }    
     (async () => {
         await helper(edges, n, src);
         callback();
     })();
+}
+
+
+function showPaths(negativeCycleDetected,src, dst, previous_neighbours, distances){
+    if(negativeCycleDetected){
+        msg.innerHTML += "<br>Negtaive Cycle Detected !"
+    }else{
+        const transformFn = (x) => NODE_MAP.get(x);
+
+        function stringBuilder(map, transformFn) {
+            var res = ""
+            if(dst){
+                if(map.has(dst)){
+                    res += `${NODE_MAP.get(dst)} (${distances[dst]}): `;
+                    res += map.get(dst).map(transformFn).join(", "); 
+                }
+                else{
+                    res = `No path from ${NODE_MAP.get(src)} to  ${NODE_MAP.get(dst)}: `
+                }
+            }
+            else{
+                for (const [key, value] of map) {
+                    res += `${NODE_MAP.get(key)} (${distances[key]}): `;
+                    res += value.map(transformFn).join(", "); 
+                    res += "<br>";
+                }
+            }
+            return res;
+        }
+        const str = stringBuilder(previous_neighbours, transformFn);
+        msg.innerHTML+="<br>"
+        msg.innerHTML += str
+    }        
 }
 
 
@@ -160,13 +169,20 @@ function startBelmanFord(){
             .data(graph.nodes)
             .attr("fill", NATURAL)
             .attr('stroke', 'none')
-        msg.innerHTML = '';
+      
         
         clearTable(document);
         createTableHeaders(n, document)
         
         var src = parseInt(src_selector.value, 10);  
-        var dst = parseInt(dst_selector.value, 10);    
+        var dst = parseInt(dst_selector.value, 10);  
+        
+        msg.innerHTML = `Shortest Paths from ${NODE_MAP.get(src)}`;
+        if(dst){
+            msg.innerHTML +=  ` to ${NODE_MAP.get(dst)}`
+        }
+
+       
 
         belmanFord(edges, n, src, dst, ()=>{
             process_goes = false; 
@@ -204,9 +220,10 @@ function vizualize(){
 function changeGraph() {
     if (!process_goes) {
         svg.selectAll("*").remove(); 
-        msg.innerText='';
+       
         src_selector.innerHTML = "";
         dst_selector.innerHTML = "";
+        msg.innerHTML = `Shortest Paths from A`;
         clearTable(document);
         clearEdgeTable(document);
         vizualize();

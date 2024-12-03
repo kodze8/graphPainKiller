@@ -73,8 +73,7 @@ function detectCycle(edges, n, callback) {
     // Make the recursive function async to use await
     async function rec(src, adj, path, prev) {
         path.push(src);
-        markNode(src, LIGHT_BLUE)
-        //update.innerHTML = `path: ${path}`;
+        markNode(src, YELLOW)
         addRow(NODE_MAP.get(src), table)
         
 
@@ -119,7 +118,7 @@ function detectCycleDirected(edges, n, callback) {
     async function rec(adj, src, path, visited) {
         path.push(src);
         visited.add(src);
-        markNode(src, LIGHT_BLUE);
+        markNode(src, YELLOW);
         addRow(NODE_MAP.get(src), table)
         
 
