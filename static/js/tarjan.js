@@ -1,5 +1,3 @@
-
-
 function tarjan(n, edges){
     function rec(v, adj, stack, visited){
         visited.add(v);

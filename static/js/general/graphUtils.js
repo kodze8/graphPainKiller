@@ -1,3 +1,18 @@
+/**
+* Functions:
+* - edges_to_adj: Transforms a list of edges into an adjacency map (undirected graph).
+* - shuffleArray: Shuffles an array in-place.
+* - getRandomElement: Returns a random element from an array.
+* - transform_for_vizualization: Converts edges and nodes into a graph object suitable for visualization.
+* - graphGenerator: Generates a random, valid graph structure with nodes and edges.
+* - generate_valid_graph: Attempts to generate a valid graph, retrying on failure.
+* - visualizeStaticGraph: Visualizes an undirected graph using D3.js.
+* - vizualizeNumericGraph: Visualizes a graph with numeric node labels.
+* - generateSrcInput: Populates a dropdown for source node selection with default value.
+* - generateDstInput: Populates a dropdown for destination node selection with default value.
+* - errorPage: Displays a simple error message on the page.
+*/
+
 // Graph DIMENSIONS
 export const WIDTH = 500
 export const HEIGHT = 300
@@ -7,16 +22,14 @@ export const YELLOW = "#BAD80F"
 export const NATURAL = "#EFF2CD"
 
 export const INCEREMENT = 100;
+
 export const NODE_MAP = new Map();
-
-
 for (let i = 0; i < 10; i++) {
     const letter = String.fromCharCode(65 + i); 
     NODE_MAP.set(i, letter);
 }
 
 
-// transforms n, edges to adjacency Map. 
 // Output: node -> neighbours
 export function edges_to_adj(n, edges) {
     const adj = new Map();
@@ -45,7 +58,6 @@ export function getRandomElement(arr) {
 }
 
 
-
 // transforms n, edges to graph object
 export function transform_for_vizualization(edges, nodes){
     const links =[]
@@ -57,11 +69,9 @@ export function transform_for_vizualization(edges, nodes){
 
 
 // Output :
-// n, 
-// nodes[]: {id: src, x: INITIAL_POSITION, y: INITIAL_POSITION}
-// edges[] : [u, v] 
-
-// NEVER USE IT !
+//          n, 
+//          nodes[]: {id: src, x: INITIAL_POSITION, y: INITIAL_POSITION}
+//          edges[] : [u, v] 
 export function graphGenerator() {
     const DIRECTIONS = [[0, 1], [0, -1], [1, 0], [1, 1], [1, -1]];
     const DEGREES = [1,1,1,1,1,2,2,2];

@@ -27,7 +27,7 @@ import {
     createTableHeaders, 
     addRow, 
     clearTable
-} from './general/test.js';
+} from './general/table.js';
 
 const svg = d3.select("svg")
 let n, edges, nodes; 

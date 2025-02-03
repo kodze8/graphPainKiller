@@ -1,7 +1,11 @@
-/** UPDATED FUNCTIONS:
- * 1. edgesToAdjDirected
- * 2. transformForVizualizationDirected
- * 3. visualizeStaticGraphDirected
+/**
+ * Functions:
+ * - edgesToAdjDirected: Converts a list of edges to an adjacency list for a directed graph.
+ * - setDirection: Randomly changes the direction of edges.
+ * - addNegativeValues: Adds random negative weights to edges.
+ * - visualizeStaticGraphDirected: Visualizes a directed graph with static nodes and links.
+ * - vizualizeDirectedNumericGraph: Visualizes a directed graph with numeric labels for nodes.
+ * - visualizeStaticGraphDirectedWeighted: Visualizes a weighted directed graph, showing weights on links.
  */
 
 import { NODE_MAP, } from './graphUtils.js';
@@ -41,10 +45,6 @@ export function addNegativeValues(edges){
     
 
 
-
-
-
-
 // vizualizes graph
 export function visualizeStaticGraphDirected(graph, svg) {
     const width = +svg.attr("width"),
@@ -63,14 +63,14 @@ export function visualizeStaticGraphDirected(graph, svg) {
     svg.append("defs").append("marker")
         .attr("id", "arrow")
         .attr("viewBox", "0 -5 10 10")
-        .attr("refX", nodeRadius + 5) // Position arrow at the end of each line
+        .attr("refX", nodeRadius + 5) 
         .attr("refY", 0)
         .attr("markerWidth", 6)
         .attr("markerHeight", 6)
         .attr("orient", "auto")
       .append("path")
         .attr("d", "M0,-5L10,0L0,5")
-        .attr("fill", "#999"); // Set arrow color to match the link
+        .attr("fill", "#999"); 
 
     // Draw links with arrows
     svg.append("g")
@@ -110,7 +110,6 @@ export function visualizeStaticGraphDirected(graph, svg) {
         .attr("y", d => d.y + 1)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        // .text(d => d.id);
         .text(d => NODE_MAP.get(d.id));
 }
 

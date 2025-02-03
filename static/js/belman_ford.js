@@ -29,7 +29,7 @@ import {
     addRow, 
     clearTable, 
     colorEdgeCell
-} from './general/test.js';
+} from './general/table.js';
 
 
 const svg = d3.select("svg")
